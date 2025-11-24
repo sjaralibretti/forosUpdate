@@ -28,6 +28,24 @@ class UsuarioViewModel : ViewModel() {
         _estado.update{it.copy ( terminos = valor)}
     }
 
+    fun onModeradorCheck(valor : Boolean) {
+        _estado.update{it.copy ( moderador = valor)}
+    }
+
+    fun borrarPost() : Boolean {
+        val estadoActual = _estado.value
+        val errores = UsuarioErrores(
+            moderador = if (!estadoActual.moderador) true else null,
+        )
+        val hayErrores = listOfNotNull(
+            errores.moderador
+        ).isNotEmpty()
+
+        _estado.update {it.copy ( errores = errores) }
+
+        return !hayErrores
+    }
+
     fun validarCasillas() : Boolean {
         val estadoActual = _estado.value
         val errores = UsuarioErrores(

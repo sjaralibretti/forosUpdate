@@ -1,9 +1,14 @@
 package cl.duoc.foros.model
 
 data class Moderador(
-    val nombre : String = "",
-    val correo : String = "",
-    val clave : String = "",
-    val terminos : Boolean = false,
+    val moderador : Boolean = true
+) : Usuario(
+        usuarioID = 0,
+        nombre = "",
+        correo = "",
+        clave = "",
+        terminos = false,
+        errores = UsuarioErrores()
+        )
     // object funcionesModeracion : FuncionesModeracion()
-)
+

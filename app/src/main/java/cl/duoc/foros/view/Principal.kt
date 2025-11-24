@@ -4,11 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -76,15 +79,13 @@ fun Principal(
         ) {
             Text("bwaaa")
         }
-/*
-        Image(
-            painter = painterResource(id = R.drawable.logo), "Usuario",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp),
-            contentScale = ContentScale.Fit
-        )
-
- */
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(
+                checked = estado.moderador,
+                onCheckedChange = viewModel::onModeradorCheck
+            )
+            Spacer(Modifier.width(8.dp))
+            Text("Usuario es moderador")
+        }
     }
 }
