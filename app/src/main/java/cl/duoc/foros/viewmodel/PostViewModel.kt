@@ -9,6 +9,7 @@ import cl.duoc.foros.repository.UsuarioRepository
 import cl.duoc.foros.view.Post
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PostViewModel(private val repository : PostRepository) : ViewModel() {
@@ -17,11 +18,20 @@ class PostViewModel(private val repository : PostRepository) : ViewModel() {
 
     val estado : StateFlow<Publicacion> = _estado
 
+    fun onTituloCHange(valor : String) {
+        _estado.update { it.copy(titulo = valor, errores = it.errores.copy(titulo = null))}
+    }
+
+    fun onContenidoChange(valor : String) {
+        _estado.update { it.copy(contenido = valor, errores = it.errores.copy(contenido = null))}
+    }
+
     fun crearPost() {
         val estadoActual = _estado.value
         viewModelScope.launch {
             val nuevoPost = Publicacion(
                 usuarioID = estadoActual.usuarioID,
+                titulo = estadoActual.titulo,
                 contenido = estadoActual.contenido,
                 valoracion = estadoActual.valoracion
             )
