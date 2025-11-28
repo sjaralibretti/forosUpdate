@@ -10,6 +10,5 @@ data class Usuario(
     val correo : String = "",
     val clave : String = "",
     val terminos : Boolean = false,
-    val errores : UsuarioErrores = UsuarioErrores(),
     val moderador : Boolean = false
-)
+    )

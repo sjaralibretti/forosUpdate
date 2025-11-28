@@ -24,10 +24,12 @@ import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +39,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import cl.duoc.foros.model.AppDatabase
+import cl.duoc.foros.repository.UsuarioRepository
 import cl.duoc.foros.view.ForosCategorias
 import cl.duoc.foros.view.Post
 import cl.duoc.foros.view.Principal
@@ -47,8 +51,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
             val navController = rememberNavController()
-            val usuarioViewModel : UsuarioViewModel = viewModel()
+
+            val context = LocalContext.current
+            val db = remember { AppDatabase.getDatabase(context) }
+            val repository = remember { UsuarioRepository(db.usuarioDao()) }
+            val usuarioViewModel = remember { UsuarioViewModel(repository) }
 
             NavHost(navController = navController, startDestination = "Principal") {
                 composable("Principal") {
@@ -294,19 +303,3 @@ fun ForosCategorias() {
 
  */
 
-@Preview(showBackground = true)
-@Composable
-fun botonCrearPost() {
-    Button(
-        onClick = {
-            // navController.navigate("CrearPost")
-        },
-        modifier = Modifier
-            .width(16.dp)
-            .height(16.dp)
-
-    ) {
-        // materialIcon()
-        Text("+")
-    }
-}
